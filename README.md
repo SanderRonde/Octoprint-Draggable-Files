@@ -11,6 +11,6 @@ or manually using this URL:
 
 ## Example:
 
-![Dragging files or folders](./extra/dragging.gif)
+![Dragging files or folders](./extras/dragging.gif)
 
-![Resizing the file manager](./extra/resizing.gif)
+![Resizing the file manager](./extras/resizing.gif)

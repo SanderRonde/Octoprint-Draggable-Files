@@ -42,7 +42,7 @@ class Draggable_filesPlugin(
                 repo="OctoPrint-Draggable_files",
                 current=self._plugin_version,
                 # update method: pip
-                pip="https://github.com/SanderRonde/OctoPrint-Draggable_files/archive/{target_version}.zip",
+                pip="https://github.com/SanderRonde/Octoprint-Draggable-Files/archive/{target_version}.zip",
             )
         )
 

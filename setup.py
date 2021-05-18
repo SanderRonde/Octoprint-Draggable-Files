@@ -27,7 +27,7 @@ plugin_author = "Sander Ronde"
 plugin_author_email = "awsdfgvhbjn@gmail.com"
 
 # The plugin's homepage URL. Can be overwritten within OctoPrint's internal data via __plugin_url__ in the plugin module
-plugin_url = "https://github.com/SanderRonde/OctoPrint-Draggable_files"
+plugin_url = "https://github.com/SanderRonde/Octoprint-Draggable-Files"
 
 # The plugin's license. Can be overwritten within OctoPrint's internal data via __plugin_license__ in the plugin module
 plugin_license = "MIT"

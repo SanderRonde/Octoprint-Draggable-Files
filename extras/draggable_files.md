@@ -11,9 +11,9 @@ license: MIT
 # TODO
 date: 2021-5-18
 
-homepage: https://github.com/SanderRonde/OctoPrint-Draggable_files
-source: https://github.com/SanderRonde/OctoPrint-Draggable_files
-archive: https://github.com/SanderRonde/OctoPrint-Draggable_files/archive/main.zip
+homepage: https://github.com/SanderRonde/Octoprint-Draggable-Files
+source: https://github.com/SanderRonde/Octoprint-Draggable-Files
+archive: https://github.com/SanderRonde/Octoprint-Draggable-Files/archive/main.zip
 
 #follow_dependency_links: false
 

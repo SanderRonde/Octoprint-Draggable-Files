@@ -1,0 +1,9 @@
+.scrollable-draggable {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADkAAABMCAMAAADgKe/FAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAMUExURQAAAJeXl7GxsQAAAM3IJbAAAAAEdFJOU////wBAKqn0AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAy0lEQVRYR+2YwQ6DIBAFC/z/P1fKs21w39uwHEzMzkUkmUxEDuKrRZFmwdVEmbVUjCyUWYqKCrMepogK8xBVlJs9qaLc/IgiSs2RFFFqQuRRZp5JHmUmtA5mZoj5S9IoMSENMDdhm/9JFmXP6ZOmxy0m3vY6aXrk7vPYMLHG66TpkbvPY8PEGq+TpkfuPo8nmBtfqXAGmJsgZvxrPH4C2Dh1xE863yhLcvOM4u4KN0eUJoU5ohgbCLNHeVKZPYqRhTLjfwXifyIUrb0BEwYpHb4eiYYAAAAASUVORK5CYII=");
+    height: 18px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #f1f1f1;
+	cursor: pointer;;
+}

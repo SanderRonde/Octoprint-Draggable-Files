@@ -13,7 +13,7 @@ date: 2021-5-18
 
 homepage: https://github.com/SanderRonde/OctoPrint-Draggable_files
 source: https://github.com/SanderRonde/OctoPrint-Draggable_files
-archive: https://github.com/SanderRonde/OctoPrint-Draggable_files/archive/master.zip
+archive: https://github.com/SanderRonde/OctoPrint-Draggable_files/archive/main.zip
 
 #follow_dependency_links: false
 

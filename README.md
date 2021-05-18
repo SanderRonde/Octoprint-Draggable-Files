@@ -7,7 +7,7 @@ Plugin that allows for the dragging of files in the File Manager. Additionally, 
 Install via the bundled [Plugin Manager](https://docs.octoprint.org/en/master/bundledplugins/pluginmanager.html)
 or manually using this URL:
 
-    https://github.com/SanderRonde/OctoPrint-Draggable_files/archive/master.zip
+    https://github.com/SanderRonde/OctoPrint-Draggable_files/archive/main.zip
 
 ## Example:
 

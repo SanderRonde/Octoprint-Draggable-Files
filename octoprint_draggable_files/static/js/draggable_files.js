@@ -50,10 +50,24 @@ $(function () {
             return [...splitFirstPart, firstSecondPart].join("/");
         }
 
+        _createPathFromTarget(target) {
+            const fullPath = [];
+            let current = target;
+            while (current) {
+                fullPath.push(current);
+                current = current.parentNode;
+            }
+            return fullPath;
+        }
+
         _getMoveDestination(e) {
             const {originalEvent} = e;
-            for (let i = 0; i < originalEvent.path.length; i++) {
-                const element = originalEvent.path[i];
+            const eventPath =
+                originalEvent.path ||
+                (originalEvent.composedPath && originalEvent.composedPath()) ||
+                this._createPathFromTarget(originalEvent.target);
+            for (let i = 0; i < eventPath.length; i++) {
+                const element = eventPath[i];
                 if (element && element.classList && element.classList.contains("entry")) {
                     const siblings = this._getEntries();
                     const isBack = element.classList.contains("back");

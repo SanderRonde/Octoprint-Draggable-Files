@@ -108,8 +108,35 @@ $(function () {
             scroller.style.height = `${this._settingsModel.settings.plugins.draggable_files.scrolled_expanded_height()}px`;
         }
 
+        _setScrollerColor(scroller) {
+            const scrollbarColor = window
+                .getComputedStyle(scroller, "::-webkit-scrollbar")
+                .getPropertyValue("background-color");
+            console.log(scrollbarColor);
+            // Figure out whether this color is "dark"
+            const [r, g, b] = scrollbarColor
+                .split("(")[1]
+                .split(")")[0]
+                .split(",")
+                .slice(0, 3)
+                .map((color) => parseInt(color.trim(), 10));
+            const isDark = Math.min(r, g, b) < 100;
+
+            const gcodeFiles = $(".gcode_files")[0];
+            if (isDark) {
+                gcodeFiles.classList.add("dark");
+            }
+            const stylesheet = document.createElement("style");
+            document.head.appendChild(stylesheet);
+            stylesheet.sheet.addRule(
+                ".gcode_files ::-webkit-resizer",
+                `background-color: ${scrollbarColor}`
+            );
+        }
+
         _makeScrollerResizable() {
             const scroller = $(".gcode_files .scroll-wrapper")[0];
+            this._setScrollerColor(scroller);
             scroller.style.resize = "vertical";
             this._applyStoredHeight(scroller);
             const observer = new MutationObserver((mutationList) => {

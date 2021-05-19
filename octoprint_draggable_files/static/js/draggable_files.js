@@ -112,7 +112,6 @@ $(function () {
             const scrollbarColor = window
                 .getComputedStyle(scroller, "::-webkit-scrollbar")
                 .getPropertyValue("background-color");
-            console.log(scrollbarColor);
             // Figure out whether this color is "dark"
             const [r, g, b] = scrollbarColor
                 .split("(")[1]

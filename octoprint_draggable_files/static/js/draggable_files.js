@@ -92,7 +92,7 @@ $(function () {
         _onMove(e) {
             const {destination, source} = this._getMoveDestination(e);
 
-            if (destination.type !== "folder") return;
+            if (destination.type !== "folder" || destination.name === source.name) return;
 
             // Move the file/folder to that file/folder
             this._filesModel.moveFileOrFolder(source.path, `/${destination.path}`);

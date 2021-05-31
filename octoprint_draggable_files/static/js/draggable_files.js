@@ -121,9 +121,6 @@ $(function () {
                     filter: ".btn",
                     onEnd: (e) => {
                         this._onMove(e);
-                    },
-                    onChoose(e) {
-                        console.log("choose");
                     }
                 });
             }

@@ -7,3 +7,7 @@
     /** A dark background so a white image */
     background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABOSURBVDhPY/z//z8DJYAJSpMNRg0YYAPA8U+uASDNjCAGOQbANYMAqQagaAYBUgxA10xSGGDTTHQY4NQMAoQMwKsZBAgZgKIYCND4DAwA00IPHRxhHckAAAAASUVORK5CYII=");
 }
+
+#files .gcode_files .entry {
+	overflow: initial!important;
+}

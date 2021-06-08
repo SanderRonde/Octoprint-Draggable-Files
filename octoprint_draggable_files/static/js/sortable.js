@@ -7,7 +7,7 @@
  (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global = global || self, global.Sortable = factory());
+  (global = global || self, global.Sortable1_13_0 = factory());
 }(this, function () { 'use strict';
 
   function _typeof(obj) {

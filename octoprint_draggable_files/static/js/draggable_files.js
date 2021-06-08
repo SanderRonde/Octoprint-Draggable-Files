@@ -11,6 +11,14 @@ $(function () {
         constructor([filesModel, settingsModel]) {
             this._filesModel = filesModel;
             this._settingsModel = settingsModel;
+            this._overrideFunction(this._filesModel, "_handleDragEnter", (...args) =>
+                this._dragEnterHandler(...args)
+            );
+        }
+
+        _overrideFunction(parent, fnName, target) {
+            const original = parent[fnName].bind(parent);
+            parent[fnName] = (...args) => target(original, ...args);
         }
 
         _getEntries() {
@@ -111,10 +119,106 @@ $(function () {
             })(navigator.userAgent || navigator.vendor || window.opera);
         }
 
+        _getHoverColor() {
+            // Get a sample entry
+            const entry = $(".gcode_files .scroll-wrapper .entry")[0];
+            if (!entry) return null;
+
+            // Loop through sheets
+            let lastMatch = null;
+            for (const sheet of document.styleSheets) {
+                // Loop through rules
+                for (const rule of sheet.cssRules) {
+                    // Filter out non-css-page-rules
+                    if (rule.type !== 1) continue;
+                    /**
+                     * @type {CSSPageRule}
+                     */
+                    const cssRule = rule;
+                    if (cssRule.selectorText.includes(".entry:hover")) {
+                        // We've got a potentially matching rule, check if it
+                        // would match if hover was enabled
+                        const nonHoverRule = cssRule.selectorText.replace(
+                            ".entry:hover",
+                            ".entry"
+                        );
+                        if (entry.matches(nonHoverRule)) {
+                            // Yep it would match, this is the one
+                            lastMatch = cssRule.style.backgroundColor;
+                        }
+                    }
+                }
+            }
+
+            return lastMatch;
+        }
+
+        _scrollWrapper = $(".gcode_files .scroll-wrapper")[0];
+
+        _listenedChildren = new WeakSet();
+        /**
+         * Makes sure the hover effect still shows up regardless
+         * of the fact that we're using a different dragging
+         * technique
+         */
+        _forceHoverEffect() {
+            let hoverColor = this._getHoverColor();
+            const observer = new MutationObserver(() => {
+                if (!hoverColor) {
+                    hoverColor = this._getHoverColor();
+                }
+
+                [...this._scrollWrapper.children].forEach((child) => {
+                    if (this._listenedChildren.has(child)) return;
+                    this._listenedChildren.add(child);
+
+                    let dragEnterCount = 0;
+                    child.addEventListener("dragenter", () => {
+                        child.style.backgroundColor = hoverColor;
+                        dragEnterCount++;
+                    });
+                    child.addEventListener("dragleave", () => {
+                        dragEnterCount--;
+
+                        if (dragEnterCount === 0) {
+                            child.style.backgroundColor = "transparent";
+                        }
+                    });
+                    child.addEventListener("dragend", () => {
+                        dragEnterCount = 0;
+                        child.style.backgroundColor = "transparent";
+                    });
+                });
+            });
+            observer.observe(this._scrollWrapper, {
+                childList: true
+            });
+        }
+
+        _dragEnterHandler(original, ...args) {
+            original(...args);
+        }
+
+        _overrideDragEnter() {
+            let dragDisabled = false;
+            this._dragEnterHandler = (original, ...args) => {
+                if (dragDisabled) return;
+                original(...args);
+            };
+
+            this._scrollWrapper.addEventListener("mouseenter", () => {
+                dragDisabled = true;
+            });
+            this._scrollWrapper.addEventListener("mouseleave", () => {
+                dragDisabled = false;
+            });
+        }
+
         _addListeners() {
             if (!this._isMobile()) {
-                new Sortable($(".gcode_files .scroll-wrapper")[0], {
-                    forceFallback: true,
+                this._forceHoverEffect();
+                this._overrideDragEnter();
+                new Sortable1_13_0(this._scrollWrapper, {
                     draggable: ".entry",
                     sort: false,
                     direction: "vertical",
@@ -164,18 +268,19 @@ $(function () {
         }
 
         _makeScrollerResizable() {
-            const scroller = $(".gcode_files .scroll-wrapper")[0];
-            this._setScrollerColor(scroller);
-            scroller.style.resize = "vertical";
-            this._applyStoredHeight(scroller);
+            this._setScrollerColor(this._scrollWrapper);
+            this._scrollWrapper.style.resize = "vertical";
+            this._applyStoredHeight(this._scrollWrapper);
             const observer = new MutationObserver((mutationList) => {
                 for (const mutation of mutationList) {
                     if (mutation.type === "attributes") {
-                        this._storeUpdatedHeight(scroller.style.height.split("px")[0]);
+                        this._storeUpdatedHeight(
+                            this._scrollWrapper.style.height.split("px")[0]
+                        );
                     }
                 }
             });
-            observer.observe(scroller, {
+            observer.observe(this._scrollWrapper, {
                 attributes: true,
                 attributeFilter: ["style"]
             });

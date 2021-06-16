@@ -19,10 +19,6 @@ class Draggable_filesPlugin(
     octoprint.plugin.SettingsPlugin,
 ):
 
-    ##~~ SettingsPlugin mixin
-    def on_after_startup(self):
-        self._logger.info("Hello World!")
-
     def get_assets(self):
         # Define your plugin's asset files to automatically include in the
         # core UI here.

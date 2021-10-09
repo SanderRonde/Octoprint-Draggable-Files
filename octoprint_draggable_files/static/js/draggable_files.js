@@ -103,7 +103,16 @@ $(function () {
             if (destination.type !== "folder" || destination.name === source.name) return;
 
             // Move the file/folder to that file/folder
-            this._filesModel.moveFileOrFolder(source.path, `/${destination.path}`);
+            const move = this._filesModel.moveFileOrFolder(source.path, `/${destination.path}`);
+            move.catch((xhr) => {
+                new PNotify({
+                    title: 'Failed to move',
+                    text: `Failed to move file or folder. Error: ${xhr.responseJSON.error}`,
+                    type: 'error',
+                })
+                // Refresh listeners
+                this._addDragListener();
+            });
         }
 
         _isMobile() {
@@ -214,19 +223,23 @@ $(function () {
             });
         }
 
+        _addDragListener() {
+            new Sortable1_13_0(this._scrollWrapper, {
+                draggable: ".entry",
+                sort: false,
+                direction: "vertical",
+                filter: ".btn",
+                onEnd: (e) => {
+                    this._onMove(e);
+                }
+            });
+        }
+
         _addListeners() {
             if (!this._isMobile()) {
                 this._forceHoverEffect();
                 this._overrideDragEnter();
-                new Sortable1_13_0(this._scrollWrapper, {
-                    draggable: ".entry",
-                    sort: false,
-                    direction: "vertical",
-                    filter: ".btn",
-                    onEnd: (e) => {
-                        this._onMove(e);
-                    }
-                });
+                this._addDragListener();
             }
         }
 

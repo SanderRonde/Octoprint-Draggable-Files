@@ -98,21 +98,22 @@ $(function () {
         }
 
         _onMove(e) {
-            const {destination, source} = this._getMoveDestination(e);
+            try {
+                const { destination, source } = this._getMoveDestination(e);
 
-            if (destination.type !== "folder" || destination.name === source.name) return;
+                if (destination.type !== "folder" || destination.name === source.name) return;
 
-            // Move the file/folder to that file/folder
-            const move = this._filesModel.moveFileOrFolder(source.path, `/${destination.path}`);
-            move.catch((xhr) => {
-                new PNotify({
-                    title: 'Failed to move',
-                    text: `Failed to move file or folder. Error: ${xhr.responseJSON.error}`,
-                    type: 'error',
-                })
-                // Refresh listeners
-                this._addDragListener();
-            });
+                this._filesModel.moveFileOrFolder(source.path, `/${destination.path}`)
+                    .catch((xhr) => {
+                        new PNotify({
+                            title: 'Failed to move',
+                            text: `Failed to move file or folder. Error: ${xhr.responseJSON?.error || 'Unknown error'}`,
+                            type: 'error',
+                        });
+                    });
+            } catch (err) {
+                console.debug("Move ignored:", err);
+            }
         }
 
         _isMobile() {
